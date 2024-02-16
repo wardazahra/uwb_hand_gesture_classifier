@@ -1,10 +1,10 @@
 # uwb_hand_gesture_classifier
 This repository implements a hand gesture recognition system using ultra-wideband (UWB) technology. It provides:
 
-Data loading and preprocessing from the UWB_dataset_2.
-/n Label encoding for categorical gesture classes.
-Training-validation-test data splitting.
-A deep learning model architecture with a Squeeze-and-Excitation block for attention.
+Data loading and preprocessing from the UWB_dataset_2.  
+Label encoding for categorical gesture classes.  
+Training-validation-test data splitting.  
+A deep learning model architecture with a Squeeze-and-Excitation block for attention.  
 Model training and evaluation (functionality needs to be added based on your code).
 
 # **Model Architecture**
