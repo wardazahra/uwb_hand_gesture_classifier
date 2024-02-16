@@ -17,7 +17,7 @@ The model is trained using TensorFlow/Keras. Training details, including the tra
 After training, the model is evaluated on a separate test set. Accuracy is computed and reported as a performance metric.
 
 # **Dependencies**
-NumPy
-TensorFlow
-Matplotlib
-Scikit-learn
+- NumPy  
+- TensorFlow  
+- Matplotlib  
+- Scikit-learn
