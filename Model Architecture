@@ -1,0 +1,41 @@
+def squeeze_excite_block(input):
+    filters = input.shape[-1]
+
+    se = GlobalAveragePooling1D()(input)
+    se = Reshape((1, filters))(se)
+    se = Dense(filters // 20, activation='relu', kernel_initializer='he_normal', use_bias=False)(se)
+    se = Dense(filters, activation='sigmoid', kernel_initializer='he_normal', use_bias=False)(se)
+    se = multiply([input, se])
+
+    return se
+def generate_model(input_shape, num_class ):
+    ip = Input(shape=input_shape)
+
+    y = Conv1D(128, 8, padding='same', kernel_initializer='he_uniform')(ip)
+    y = BatchNormalization()(y)
+    y = Activation('relu')(y)
+    y = squeeze_excite_block(y)
+
+    y = Conv1D(256, 8, padding='same', kernel_initializer='he_uniform')(y)
+    y = BatchNormalization()(y)
+    y = Activation('relu')(y)
+    y = squeeze_excite_block(y)
+
+    y = Conv1D(128, 8, padding='same', kernel_initializer='he_uniform')(y)
+   # y = BatchNormalization()(y)
+    y = Activation('relu')(y)
+
+    y = GlobalAveragePooling1D()(y)
+
+    out = Dense(num_class, activation='softmax')(y)
+
+    model = Model(ip, out)
+    model.summary()
+
+    return model
+
+
+input_shape = X_train.shape[1:]  # Assumes the shape of your input data
+
+model = generate_model(input_shape, num_classes)
+model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
