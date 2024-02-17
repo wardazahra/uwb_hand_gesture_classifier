@@ -1,0 +1,22 @@
+# Model Training
+from tensorflow.keras.models import load_model
+from tensorflow.keras.callbacks import CSVLogger
+import joblib
+import os
+import glob
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import deque
+training_history_path='content\drive\MyDrive\ex4'
+csv_logger = CSVLogger(training_history_path, append=True)
+result = model.fit(X_train, y_train, epochs=100, validation_data=(X_val, y_val), batch_size=60)
+
+# Model Evaluation
+#y_pred = model.predict_classes(X_test)
+#accuracy = np.sum(y_pred == y_test) / len(y_test)
+#print("Test Accuracy:", accuracy)
+# Step 6: Model Evaluation
+y_prob = model.predict(X_test)
+y_pred = np.argmax(y_prob, axis=1)
+accuracy = np.sum(y_pred == y_test) / len(y_test)
+print("Test Accuracy:", accuracy)
