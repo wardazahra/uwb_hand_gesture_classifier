@@ -1,0 +1,30 @@
+# Load Data
+
+data_folder = "/content/drive/MyDrive/UWB_dataset_2_gesture"
+classes = ['seven', 'eight']
+
+X = []
+y = []
+
+for i, gesture_class in enumerate(classes):
+    folder_path = os.path.join(data_folder, gesture_class, "*.txt")
+    files = glob.glob(folder_path)
+
+    for file in files:
+        with open(file, "r") as f:
+            # Assuming each file has 30 rows and 4 columns
+            data = np.loadtxt(file)
+            X.append(data)
+            y.append(i)
+
+X = np.array(X)
+y = np.array(y)
+
+# Encode Labels
+label_encoder = LabelEncoder()
+y_encoded = label_encoder.fit_transform(y)
+num_classes = len(label_encoder.classes_)
+
+# Split Data
+X_train, X_temp, y_train, y_temp = train_test_split(X, y_encoded, test_size=0.4, random_state=42)
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
